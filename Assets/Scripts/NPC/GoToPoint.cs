@@ -4,22 +4,19 @@ using UnityEngine.Events;
 
 public class GoToPoint : MonoBehaviour
 {
-    [SerializeField] GameObject endPoint;
     [SerializeField] NavMeshAgent agent;
-    public UnityEvent reachEndEvent;
-    private bool endReached = false;
+    private float playerYPos;
 
-    void Start()
+    private void Awake()
     {
-        agent.destination = endPoint.transform.position;
+        playerYPos = transform.position.y;
     }
 
-    private void Update()
+    public void GoToTarget(Vector3 target)
     {
-        if (!endReached && agent.remainingDistance == 0)
-        {
-            endReached = true;
-            reachEndEvent.Invoke();
-        }
+        Vector3 newTarget = target;
+        newTarget.y = playerYPos;
+
+        agent.destination = newTarget;
     }
 }

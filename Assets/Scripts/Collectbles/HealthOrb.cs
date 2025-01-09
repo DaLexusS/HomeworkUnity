@@ -1,18 +1,22 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PowerCollection : MonoBehaviour
+public class HealthOrb : MonoBehaviour
 {
     private bool used = false;
-    private int powerValue = 5;
-    public UnityEvent<int> powerTouched;
+    private int healAmount = 25;
+    public static UnityAction<int> onHealthOrbTouched;
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) { return; }
+
         if (used) { return; }
-        powerTouched.Invoke(powerValue);
-        used = true;
+
+        onHealthOrbTouched.Invoke(healAmount);
+      
         gameObject.SetActive(false);
+
+        used = true;
     }
 }
