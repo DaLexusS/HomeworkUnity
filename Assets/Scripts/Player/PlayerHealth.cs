@@ -6,8 +6,9 @@ using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [SerializeField]  HealthParameters healthParameters;
+
     public int health = 100;
-    public int maxHealth = 100;
     public static UnityAction<int> OnHealthUpdated;
 
     private void Awake()
@@ -25,14 +26,14 @@ public class PlayerHealth : MonoBehaviour
     public void AddHealth(int amount)
     {
         if (health <= 0) { return; }
-        health = math.min(maxHealth, health + amount);
+        health = math.min(healthParameters.MaxHealth, health + amount);
         OnHealthUpdated.Invoke(health);
     }
 
     public void TakeDamage(int amount)
     {
-        health = math.max(health - amount, 0);
-        if (health == 0) { PlayerDied(); }
+        health = math.max(health - amount, healthParameters.MinHealth);
+        if (health == healthParameters.MinHealth) { PlayerDied(); }
         OnHealthUpdated.Invoke(health);
     }
 

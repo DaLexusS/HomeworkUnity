@@ -3,12 +3,14 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    [SerializeField] HealthParameters healthParameters;
     [SerializeField] private Slider slider;
     private PlayerHealth playerData;
 
     private void Awake()
     {
         GameObject player = GameObject.FindWithTag("Player");
+
         if (player == null)
         {
             Debug.LogError("Player GameObject not found!");
@@ -23,20 +25,22 @@ public class HealthBar : MonoBehaviour
             return;
         }
 
-        slider.maxValue = playerData.maxHealth;
-        slider.minValue = 0;
+        slider.maxValue = healthParameters.MaxHealth;
+        slider.minValue = healthParameters.MinHealth;
 
         slider.value = playerData.health;
 
         PlayerHealth.OnHealthUpdated += UpdateUi;
     }
+
     private void OnDestroy()
     {
         PlayerHealth.OnHealthUpdated -= UpdateUi;
     }
+
     private void UpdateUi(int currentHealth)
     {
         slider.value = currentHealth;
-        slider.maxValue = playerData.maxHealth;
+        slider.maxValue = healthParameters.MaxHealth;
     }
 }

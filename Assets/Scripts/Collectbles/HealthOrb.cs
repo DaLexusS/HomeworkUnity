@@ -3,8 +3,9 @@ using UnityEngine.Events;
 
 public class HealthOrb : MonoBehaviour
 {
+    [SerializeField] HealthParameters healthParameters;
+
     private bool used = false;
-    private int healAmount = 25;
     public static UnityAction<int> onHealthOrbTouched;
 
     private void OnTriggerEnter(Collider other)
@@ -13,7 +14,7 @@ public class HealthOrb : MonoBehaviour
 
         if (used) { return; }
 
-        onHealthOrbTouched.Invoke(healAmount);
+        onHealthOrbTouched.Invoke(healthParameters.healAmount);
       
         gameObject.SetActive(false);
 
