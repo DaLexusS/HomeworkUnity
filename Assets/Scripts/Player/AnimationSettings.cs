@@ -18,7 +18,8 @@ public class AnimationSettings : MonoBehaviour
         animator.SetFloat("SpeedForAnimation", runningSpeedToAnimator);
         animator.SetFloat("ActionSpeed", BattleCrySpeed);
         BattleCry();
-        Roll();
+        Punch();
+        //Roll();
     }
 
     private void BattleCry()
@@ -37,6 +38,15 @@ public class AnimationSettings : MonoBehaviour
             animator.SetTrigger("Roll");
             agent.ResetPath();
             agent.Move(rollTarget.transform.position);
+        }
+    }
+
+    private void Punch()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            animator.SetTrigger("Punch");
+            agent.ResetPath();
         }
     }
 }
