@@ -7,12 +7,15 @@ public class AnimationSettings : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] float BattleCrySpeed = 0.7f;
+    [SerializeField] float runningSpeedMultiplier;
     [SerializeField] GameObject rollTarget;
 
     // Update is called once per frame
     void Update()
     {
         animator.SetFloat("Speed", agent.velocity.magnitude);
+        float runningSpeedToAnimator = agent.velocity.magnitude * runningSpeedMultiplier;
+        animator.SetFloat("SpeedForAnimation", runningSpeedToAnimator);
         animator.SetFloat("ActionSpeed", BattleCrySpeed);
         BattleCry();
         Roll();
